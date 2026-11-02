@@ -1,3 +1,4 @@
+
 plugins {
     id 'com.android.application'
 }
@@ -10,8 +11,25 @@ android {
         applicationId 'com.sh.apex.wallpaper'
         minSdk 23
         targetSdk 36
-        versionCode 1
-        versionName '1.0'
+
+        versionCode 20260100
+        versionName '2026.1.0 SH'
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(System.getenv("KEYSTORE_FILE"))
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+            keyAlias System.getenv("KEYSTORE_ALIAS")
+            keyPassword System.getenv("KEYSTORE_KEY_PASSWORD")
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+        }
     }
 
     compileOptions {
