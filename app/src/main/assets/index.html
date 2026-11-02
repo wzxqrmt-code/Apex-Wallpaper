@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Apex Wallpaper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* استایل‌ها بدون تغییر */
+:root{--black:#000;--white:#fff;--g100:#F0F0F0;--g300:#D4D4D4;--g600:#6B6B6B;--g800:#2A2A2A;
+--display:"Sora",system-ui,sans-serif;--body:"Vazirmatn",system-ui,sans-serif}
+*{box-sizing:border-box;margin:0}
+body{font-family:var(--body);background:var(--g100);color:var(--black);min-height:100vh;-webkit-font-smoothing:antialiased}
+body.view{overflow:hidden}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+button{font:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--g600);outline-offset:3px}
+
+header{background:var(--black);border-radius:0 0 40px 40px;padding:calc(env(safe-area-inset-top) + 44px) 0 32px}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{width:48px;height:48px;border-radius:50%;background:var(--white);display:grid;place-items:center;flex:none}
+.logo svg{width:26px;height:26px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(2rem,8vw,2.6rem);letter-spacing:-.04em;color:var(--white);line-height:1}
+.tag{color:var(--g300);margin:14px 0 22px;font-size:1.02rem}
+
+.search-row{display:flex;gap:12px;align-items:center}
+.search{display:flex;align-items:center;gap:12px;height:56px;flex:1;background:var(--white);border-radius:28px;padding:0 20px 0 8px}
+.search>svg{width:24px;height:24px;fill:var(--g600);flex:none}
+.search:focus-within{box-shadow:0 0 0 3px var(--g600)}
+.search input{flex:1;min-width:0;height:100%;border:0;background:transparent;font:inherit;font-size:1.02rem;color:var(--black);outline:none}
+.search input::-webkit-search-cancel-button{display:none}
+.search input::placeholder{color:var(--g600)}
+.clr{width:40px;height:40px;border:0;border-radius:50%;background:transparent;display:none;place-items:center}
+.clr:hover{background:var(--g100)}
+.clr svg{width:20px;height:20px;fill:var(--g600)}
+.has .clr{display:grid}
+
+.refresh-btn{width:56px;height:56px;flex:none;border:0;border-radius:50%;background:var(--white);display:grid;place-items:center;cursor:pointer;transition:transform .2s,background .15s}
+.refresh-btn:hover{background:var(--g100)}
+.refresh-btn:active{transform:scale(.92)}
+.refresh-btn svg{width:24px;height:24px;fill:var(--black);transition:transform .5s}
+.refresh-btn.spinning svg{animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.rate-btn{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;height:44px;padding:0 24px;border:0;border-radius:22px;background:var(--white);color:var(--black);font-weight:700;font-size:.95rem;width:fit-content;transition:transform .15s,background .15s}
+.rate-btn:hover{background:var(--g100)}
+.rate-btn:active{transform:scale(.96)}
+.rate-btn svg{width:20px;height:20px;fill:#FBBF24}
+
+.chips{position:sticky;top:0;z-index:5;background:var(--g100);padding:14px 0 10px}
+.chips .wrap{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.chips .wrap::-webkit-scrollbar{display:none}
+.chip{flex:none;height:40px;padding:0 20px;border:1px solid var(--g300);border-radius:20px;background:var(--white);font-weight:600;font-size:.95rem}
+.chip:hover{background:var(--g300)}
+body.searching .chips{display:none}
+
+main{padding-bottom:48px}
+.sec{margin-top:22px;scroll-margin-top:72px}
+.sh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+h2{font-family:var(--display);font-weight:700;font-size:1.45rem;letter-spacing:-.03em}
+.sh span{color:var(--g600);font-size:.9rem}
+.row{display:flex;gap:12px;overflow-x:auto;margin:0 -20px;padding:0 20px 6px;scroll-snap-type:x proximity;scrollbar-width:thin}
+.row .card{flex:none;width:150px;scroll-snap-align:start}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.card{position:relative;display:block;aspect-ratio:9/16;border:1px solid var(--g300);border-radius:24px;overflow:hidden;background:var(--white);padding:0;text-align:right;color:var(--white);transition:transform .15s}
+.card:active{transform:scale(.97)}
+.card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card .cap{position:absolute;left:0;right:0;bottom:0;padding:32px 12px 12px;background:linear-gradient(transparent,rgba(0,0,0,.8))}
+.card b{display:block;font-weight:600;font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card.broken::before{content:"تصویر در دسترس نیست";position:absolute;inset:0;display:grid;place-items:center;padding:12px;text-align:center;color:var(--g600);font-size:.85rem}
+.card.broken .cap{display:none}
+.card.sk{border:0;pointer-events:none;background:linear-gradient(100deg,var(--g100) 30%,var(--g300) 50%,var(--g100) 70%);background-size:200% 100%;animation:sh 1.2s linear infinite}
+.tsk{width:120px;height:26px;border-radius:8px;background:var(--g300)}
+@keyframes sh{to{background-position:-200% 0}}
+.state{text-align:center;padding:56px 16px;color:var(--g600)}
+.state b{display:block;color:var(--black);font-family:var(--display);font-size:1.2rem;margin-bottom:6px}
+.retry{margin-top:18px;height:48px;padding:0 28px;border:0;border-radius:24px;background:var(--black);color:var(--white);font-weight:600}
+
+.viewer{position:fixed;inset:0;background:var(--black);z-index:30;visibility:hidden;opacity:0;transition:opacity .25s,visibility 0s .25s}
+body.view .viewer{visibility:visible;opacity:1;transition:opacity .25s}
+.viewer img{width:100%;height:100%;object-fit:cover}
+@media(min-width:700px){.viewer img{object-fit:contain}}
+.vx{position:absolute;top:calc(env(safe-area-inset-top) + 16px);left:16px;width:48px;height:48px;border:0;border-radius:50%;background:rgba(0,0,0,.55);display:grid;place-items:center}
+.vx svg{width:24px;height:24px;fill:var(--white)}
+.vbar{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:56px 20px calc(env(safe-area-inset-bottom) + 24px);background:linear-gradient(transparent,rgba(0,0,0,.85));color:var(--white)}
+.vbar b{display:block;font-family:var(--display);font-size:1.3rem;letter-spacing:-.02em}
+.vbar span{color:var(--g300);font-size:.9rem}
+.vdl{flex:none;height:56px;padding:0 28px;border:0;border-radius:28px;background:var(--white);color:var(--black);font-weight:600;display:flex;align-items:center;gap:10px}
+.vdl svg{width:22px;height:22px;fill:currentColor}
+.vdl:disabled{opacity:.6}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="brand">
+    <div class="logo"><svg viewBox="0 0 24 24"><path d="M4 4h7V2H4C2.9 2 2 2.9 2 4v7h2V4zm6 9-4 5h12l-3-4-2.03 2.71L10 13zm7-4.5c0-.83-.67-1.5-1.5-1.5S14 7.67 14 8.5s.67 1.5 1.5 1.5S17 9.33 17 8.5zM20 2h-7v2h7v7h2V4c0-1.1-.9-2-2-2zm0 18h-7v2h7c1.1 0 2-.9 2-2v-7h-2v7zM4 13H2v7c0 1.1.9 2 2 2h7v-2H4v-7z"/></svg></div>
+    <h1>Apex Wallpaper</h1>
+  </div>
+  <p class="tag">زیباترین والپیپرها را برای صفحه‌نمایش خود پیدا کنید.</p>
+  
+  <div class="search-row">
+    <label class="search" id="searchBox">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input id="q" type="search" placeholder="جستجوی والپیپر" autocomplete="off" aria-label="جستجوی والپیپر">
+      <button class="clr" id="clr" type="button" aria-label="پاک کردن جستجو"><svg viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+    </label>
+    
+    <button class="refresh-btn" id="btnRefresh" type="button" aria-label="بروزرسانی">
+      <svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+    </button>
+  </div>
+
+  <button class="rate-btn" id="btnRateMyket" type="button">
+    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+    ثبت نظر در مایکت
+  </button>
+</div></header>
+
+<nav class="chips" id="chips" aria-label="بخش‌ها"><div class="wrap" id="chipRow"></div></nav>
+<main class="wrap" id="content"></main>
+
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="والپیپر">
+  <img id="vimg" alt="">
+  <button class="vx" id="vclose" type="button" aria-label="بستن"><svg viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+  <div class="vbar">
+    <div><b id="vname"></b><span id="vcat"></span></div>
+    <button class="vdl" id="vdl" type="button"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg><span id="vdlt">دانلود</span></button>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = "https://dmcucfailgxvcclnbkww.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRtY3VjZmFpbGd4dmNjbG5ia3d3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI0MTIzMzIsImV4cCI6MjEwNzk4ODMzMn0.jKZzdpKf4X_l1vMwNMNgkjVGDUoAU2uS__fnGZq6YXQ";
+const TABLE = "wallpapers";
+
+const $ = id => document.getElementById(id);
+const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; };
+const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+const content = $("content"), chipRow = $("chipRow"), qEl = $("q");
+let all = [], dynamicCategories = [], current = null;
+
+// تابع فشرده‌سازی عکس‌ها
+function getThumbUrl(url) {
+  if (!url) return url;
+  let encodedUrl = url.replace(/\?/g, "%3F").replace(/&/g, "%26");
+  return "https://wsrv.nl/?url=" + encodedUrl + "&w=300&h=500&fit=cover&q=70&output=webp";
+}
+
+function card(w){
+  const b = el("button", "card"); b.type = "button"; b.setAttribute("aria-label", "باز کردن " + w.name);
+  const img = document.createElement("img"); 
+  img.loading = "lazy"; 
+  img.alt = ""; 
+  img.src = getThumbUrl(w.url); 
+  img.onerror = () => { img.remove(); b.classList.add("broken"); };
+  const cap = el("div", "cap"); cap.append(el("b", null, w.name));
+  b.append(img, cap); b.onclick = () => openViewer(w);
+  return b;
+}
+
+const count = n => n === 1 ? "۱ والپیپر" : n + " والپیپر";
+
+function showState(title, text, retry){
+  chipRow.replaceChildren();
+  const d = el("div", "state"); d.append(el("b", null, title), el("p", null, text));
+  if (retry){ const r = el("button", "retry", "دوباره تلاش کنید"); r.type = "button"; r.onclick = load; d.append(r); }
+  content.replaceChildren(d);
+}
+
+function render(){
+  const q = norm(qEl.value.trim());
+  document.body.classList.toggle("searching", !!q);
+  $("searchBox").classList.toggle("has", !!qEl.value);
+  
+  if (q){
+    const res = all.filter(w => norm(w.name).includes(q) || norm(w.category).includes(q));
+    if (!res.length) return showState("چیزی پیدا نشد", "نام دیگری یا یک دسته‌بندی دیگر را امتحان کنید.");
+    const s = el("section", "sec"), h = el("div", "sh"), g = el("div", "grid");
+    h.append(el("h2", null, "نتایج"), el("span", null, count(res.length)));
+    g.append(...res.map(card)); s.append(h, g); content.replaceChildren(s);
+    return;
+  }
+  
+  // ⭐️⭐️⭐️ تغییرات اصلی: ساخت لیست دسته‌بندی‌ها ⭐️⭐️⭐️
+  
+  // ۱. کلمه All رو به عنوان یه شاخه جدید تعریف می‌کنیم (همیشه اول لیست)
+  // و تمام عکس‌های دیتابیس رو داخلش می‌ریزیم
+  let groups = [["All", all]];
+  
+  // ۲. بقیه دسته‌بندی‌ها رو (بر اساس دیتابیس) اضافه می‌کنیم
+  dynamicCategories.forEach(c => {
+    const items = all.filter(w => w.category && w.category.toLowerCase().trim() === c.toLowerCase().trim());
+    if (items.length) groups.push([c, items]);
+  });
+  
+  if (!groups.length || all.length === 0) return showState("هنوز والپیپری ثبت نشده", "به‌زودی برمی‌گردیم، در حال افزودن موارد جدید هستیم.");
+  
+  // ۳. نمایش دکمه‌های بالای صفحه (chips)
+  chipRow.replaceChildren(...groups.map(([c]) => {
+    // اسم All رو با حروف بزرگ نگه‌دار، بقیه رو با حرف اول بزرگ
+    const displayName = c === "All" ? "همه" : (c.charAt(0).toUpperCase() + c.slice(1));
+    const b = el("button", "chip", displayName); b.type = "button";
+    b.onclick = () => $("sec-" + c).scrollIntoView({ behavior: "smooth" });
+    return b;
+  }));
+  
+  // ۴. نمایش بخش‌های عکس‌ها
+  content.replaceChildren(...groups.map(([c, items]) => {
+    const displayName = c === "All" ? "همه والپیپرها" : (c.charAt(0).toUpperCase() + c.slice(1));
+    const s = el("section", "sec"); s.id = "sec-" + c;
+    const h = el("div", "sh"); h.append(el("h2", null, displayName), el("span", null, count(items.length)));
+    
+    // برای بخش All و بقیه دسته‌بندی‌ها از اسکرول افقی استفاده می‌کنیم
+    const row = el("div", "row"); row.append(...items.map(card));
+    s.append(h, row); return s;
+  }));
+}
+
+function skeleton(){
+  chipRow.replaceChildren();
+  content.replaceChildren(...[0, 1].map(() => {
+    const s = el("section", "sec"), h = el("div", "sh"), row = el("div", "row");
+    h.append(el("div", "tsk"));
+    row.append(...[0, 1, 2].map(() => el("div", "card sk")));
+    s.append(h, row); return s;
+  }));
+}
+
+async function loadCategories() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_unique_categories`, {
+      method: "POST",
+      headers: { "apikey": SUPABASE_KEY, "Content-Type": "application/json" },
+      body: JSON.stringify({})
+    });
+    if (res.ok) {
+      const cats = await res.json();
+      dynamicCategories = cats.map(c => c.category).filter(c => c);
+    }
+  } catch (e) {
+    console.log("خطا در دریافت دسته‌بندی‌ها", e);
+  }
+}
+
+async function load(){
+  skeleton();
+  try {
+    await loadCategories();
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?select=id,name,url,category,created_at&order=created_at.desc`, { headers: { "apikey": SUPABASE_KEY } });
+    if (!res.ok) throw new Error();
+    all = await res.json(); 
+    all.sort(() => Math.random() - 0.5);
+    render();
+  } catch { showState("بارگذاری ممکن نشد", "اتصال را بررسی کنید و دوباره تلاش کنید.", true); }
+}
+
+qEl.addEventListener("input", render);
+$("clr").addEventListener("click", () => { qEl.value = ""; qEl.focus(); render(); });
+
+$("btnRefresh").addEventListener("click", async () => {
+  const btn = $("btnRefresh");
+  btn.classList.add("spinning");
+  qEl.value = ""; 
+  await load(); 
+  setTimeout(() => btn.classList.remove("spinning"), 800);
+});
+
+$("btnRateMyket").addEventListener("click", () => {
+  const packageName = "com.sh.apex.wallpaper";
+  window.location.href = "myket://comment?id=" + packageName;
+  
+  setTimeout(() => {
+    const userWantsBrowser = confirm("اپلیکیشن مایکت روی گوشی شما نصب نیست. آیا می‌خواهید صفحه اپ در وب‌سایت مایکت باز شود؟");
+    if (userWantsBrowser) {
+      window.location.href = "https://myket.ir/app/" + packageName;
+    }
+  }, 1000);
+});
+
+function openViewer(w){
+  current = w; 
+  $("vimg").src = w.url; 
+  $("vimg").alt = w.name;
+  $("vname").textContent = w.name; $("vcat").textContent = w.category;
+  document.body.classList.add("view"); $("vclose").focus();
+}
+function closeViewer(){ document.body.classList.remove("view"); }
+$("vclose").addEventListener("click", closeViewer);
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeViewer(); });
+
+$("vdl").addEventListener("click", () => {
+  if (!current) return;
+  const w = current;
+  const fileName = w.name.replace(/[^\w-]+/g, "_") || "wallpaper";
+  
+  const link = document.createElement('a');
+  link.href = w.url; 
+  link.download = fileName + ".jpg";
+  link.target = "_blank";
+  link.style.display = "none";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  
+  const btn = $("vdl"), lbl = $("vdlt");
+  btn.disabled = true; lbl.textContent = "دانلود شروع شد...";
+  setTimeout(() => { btn.disabled = false; lbl.textContent = "دانلود"; }, 2500);
+});
+
+load();
+</script>
+</body>
+      </html>
